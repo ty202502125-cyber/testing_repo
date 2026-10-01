@@ -169,8 +169,8 @@ function CertificateTemplateManager({ notify }) {
       setUploadError('Choose a PNG, JPG, or WebP image.');
       return;
     }
-    if (file.size > 500 * 1024) {
-      setUploadError('The design image must be smaller than 800 KB.');
+      if (file.size > 1 * 1024 * 1024 * 1024) {
+      setUploadError('The design image must be smaller than 1 GB.');
       return;
     }
     const reader = new FileReader();
