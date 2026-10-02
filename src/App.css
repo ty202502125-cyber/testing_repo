@@ -181,6 +181,13 @@
   .certificate-view-actions { display: none !important; }
   @page { size: landscape; margin: 12mm; }
 }
+
+.activity-modal .campaign-upload-label small { color: var(--muted); font-size: 10px; font-weight: 400; line-height: 1.5; }
+.activity-modal input[type="file"] { height: auto; min-height: 40px; padding: 7px; }
+.campaign-image-preview { display: grid; gap: 8px; justify-items: start; }
+.campaign-image-preview img { display: block; width: 100%; max-height: 220px; object-fit: contain; border: 1px solid var(--line); border-radius: 8px; background: var(--cream); }
+.detail-campaign-image { display: block; width: 100%; max-height: 340px; margin: 0 0 18px; border-radius: 8px; object-fit: cover; }
+.detail-hero.has-campaign-image .detail-emoji { display: none; }
 .auth-layout { position: relative; }
 .auth-layout > .theme-toggle { position: absolute; top: 18px; right: 20px; z-index: 4; }
 @media (max-width: 650px) {
