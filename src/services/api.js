@@ -12,6 +12,8 @@ const read = (key, fallback) => {
   try { const value = JSON.parse(localStorage.getItem(key)); return value ?? fallback; } catch { return fallback; }
 };
 const write = (key, value) => { localStorage.setItem(key, JSON.stringify(value)); return value; };
+// Persistence boundary: UI components call these services rather than storage directly.
+// Replace the implementations here with API requests when the backend is available.
 export const store = { read, write };
 export const authService = {
   async login(email, password) {
@@ -109,6 +111,8 @@ export const certificateService = {
   },
 };
 export const participationService = {
+  getRecordsForUser(user) { return read('campus_records', []).filter((entry) => entry.userId === user.id || entry.studentId === user.studentId); },
+  getAllRecords() { return read('campus_records', []); },
   async signUp(activityId, user) {
     await wait(); const items = read('campus_activities', []); const activity = items.find((entry) => entry.id === activityId);
     if (activity?.status === 'cancelled') throw new Error(activity.cancellationReason ? `This event has been cancelled: ${activity.cancellationReason}` : 'This event has been cancelled.');
@@ -117,12 +121,26 @@ export const participationService = {
     if (signups.some((entry) => entry.activityId === activityId && entry.studentId === user.id)) throw new Error('You are already registered.');
     write('campus_signups', [...signups, { activityId, studentId: user.id }]);
     write('campus_activities', items.map((entry) => entry.id === activityId ? { ...entry, spotsAvailable: entry.spotsAvailable - 1 } : entry));
+    const records = read('campus_records', []);
+    if (!records.some((entry) => (entry.userId === user.id || entry.studentId === user.studentId) && entry.activityId === activityId)) {
+      write('campus_records', [{ id: `r${Date.now()}`, userId: user.id, studentId: user.studentId, studentName: user.name, activityId, activityTitle: activity.title, date: activity.date, hoursLogged: 0, status: 'registered' }, ...records]);
+    }
     return true;
   },
   async logHours(activityId, hours, user) {
     await wait(); const activity = read('campus_activities', []).find((entry) => entry.id === activityId);
     if (!activity) throw new Error('Activity not found.');
-    const records = read('campus_records', []); const record = { id: `r${Date.now()}`, studentId: user.studentId, studentName: user.name, activityId, activityTitle: activity.title, date: new Date().toISOString().slice(0, 10), hoursLogged: Number(hours), status: 'pending' };
+    const amount = Number(hours);
+    if (!Number.isFinite(amount) || amount <= 0 || amount > 24) throw new Error('Enter a valid number of hours (up to 24).');
+    const records = read('campus_records', []);
+    const index = records.findIndex((entry) => (entry.userId === user.id || entry.studentId === user.studentId) && entry.activityId === activityId);
+    if (index >= 0) {
+      const existing = records[index];
+      if (!['registered', 'rejected'].includes(existing.status)) throw new Error('Hours for this activity have already been submitted.');
+      const record = { ...existing, userId: user.id, hoursLogged: amount, status: 'pending', submittedAt: new Date().toISOString() };
+      const next = [...records]; next[index] = record; write('campus_records', next); return record;
+    }
+    const record = { id: `r${Date.now()}`, userId: user.id, studentId: user.studentId, studentName: user.name, activityId, activityTitle: activity.title, date: activity.date, hoursLogged: amount, status: 'pending', submittedAt: new Date().toISOString() };
     write('campus_records', [record, ...records]); return record;
   },
   async approveHours(recordId) { await wait(); const records = read('campus_records', []); const next = records.map((record) => record.id === recordId ? { ...record, status: 'approved' } : record); write('campus_records', next); return next.find((record) => record.id === recordId); },
