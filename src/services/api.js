@@ -61,7 +61,7 @@ export const activityService = {
   },
 };
 export const certificateTemplateService = {
-  getAll() { return read('campus_certificate_templates', [{ id: 'default', name: 'Certificate of Service', description: 'Recognition for approved volunteer service.', title: 'Certificate of Service', message: 'for contributing {hours} approved volunteer hours to the campus community.', organization: 'Good Neighbor · Campus Community', signatory: 'Community Engagement Office', position: 'Community Engagement Office', nameY: 58, designImage: '', overlayRecipientOnly: false }]); },
+  getAll() { return read('campus_certificate_templates', [{ id: 'default', name: 'Certificate of Service', description: 'Recognition for approved volunteer service.', title: 'Certificate of Service', message: 'for contributing {hours} approved volunteer hours to the campus community.', organization: 'Campus Connect · Student Community', signatory: 'Community Engagement Office', position: 'Community Engagement Office', nameY: 58, designImage: '', overlayRecipientOnly: false }]); },
   async save(template) {
     await wait();
     const templates = this.getAll();

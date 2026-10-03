@@ -1,0 +1,459 @@
+/* Campus Connect design system.
+ *
+ * Loaded after App.css so it owns the final token values and the shared
+ * component vocabulary used by every layout direction: readable operational
+ * type, an honest status treatment, and the workspace layout switcher.
+ */
+
+:root {
+  --bg: #f4f5f0;
+  --surface: #ffffff;
+  --surface-2: #f6f8f3;
+  --border: #e2e7e0;
+  --border-strong: #d3dbd4;
+  --ink: #1c2a24;
+  --muted: #57665e;
+  --faint: #6b7873;
+  --accent: #17634f;
+  --accent-hover: #124d3e;
+  --accent-soft: #e8f0e9;
+  --accent-ink: #ffffff;
+  --pine: #17634f;
+  --pine-deep: #173e31;
+  --success: #2e7a4e;
+  --success-bg: #e7f2ea;
+  --success-border: #bcd8c2;
+  --warning: #8e5b11;
+  --warning-bg: #f8f0dd;
+  --warning-border: #e3d2a5;
+  --danger: #a23f36;
+  --danger-bg: #f8e9e7;
+  --danger-border: #e3bdb7;
+  --info: #33606f;
+  --info-bg: #e7eff0;
+  --info-border: #bfd0d3;
+  --font-display: 'Newsreader', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --shadow-1: 0 1px 2px rgba(28, 42, 36, 0.05);
+  --shadow-2: 0 4px 16px rgba(28, 42, 36, 0.07);
+  --measure: 1160px;
+}
+
+:root[data-theme='dark'] {
+  --bg: #131716;
+  --surface: #1b211e;
+  --surface-2: #232b27;
+  --border: #2e3833;
+  --border-strong: #43524b;
+  --ink: #edf1ee;
+  --muted: #b3beb7;
+  --faint: #98a49d;
+  --accent: #6fb69d;
+  --accent-hover: #8cc9b2;
+  --accent-soft: rgba(111, 182, 157, 0.14);
+  --accent-ink: #12201b;
+  --pine: #1f7a60;
+  --pine-deep: #2b9a79;
+  --success: #86bd97;
+  --success-bg: rgba(46, 122, 78, 0.18);
+  --success-border: rgba(134, 189, 151, 0.32);
+  --warning: #d9b45f;
+  --warning-bg: rgba(150, 105, 15, 0.2);
+  --warning-border: rgba(217, 180, 95, 0.32);
+  --danger: #dc9187;
+  --danger-bg: rgba(174, 61, 52, 0.2);
+  --danger-border: rgba(220, 145, 135, 0.32);
+  --info: #8fb9c6;
+  --info-bg: rgba(51, 110, 96, 0.2);
+  --info-border: rgba(143, 185, 198, 0.3);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* Base ---------------------------------------------------------------------- */
+.app {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.content-wrap {
+  width: min(var(--measure), calc(100% - 56px));
+  padding: 36px 0 64px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Readable operational type ------------------------------------------------- */
+.sidebar .nav-link {
+  min-height: 42px;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.sidebar .nav-link .nav-text {
+  flex: 1;
+  text-align: left;
+}
+
+.sidebar .nav-count {
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: var(--pill);
+  background: var(--warning-bg);
+  color: var(--warning);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sidebar-section-label {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  letter-spacing: 0;
+}
+
+td {
+  font-size: 14px;
+}
+
+th {
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+}
+
+td small {
+  font-size: 12.5px;
+}
+
+/* Badge tones share the semantic ramps with the status dot ------------------ */
+.badge.success,
+.badge.green {
+  background: var(--success-bg);
+  color: var(--success);
+  border-color: var(--success-border);
+}
+
+.badge.warning,
+.badge.yellow {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border-color: var(--warning-border);
+}
+
+.badge.danger,
+.badge.red {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+
+.badge.info {
+  background: var(--info-bg);
+  color: var(--info);
+  border-color: var(--info-border);
+}
+
+.page-intro h1 {
+  font-size: clamp(27px, 3vw, 34px);
+  font-weight: 500;
+}
+
+.page-intro p {
+  font-size: 14.5px;
+}
+
+.section-heading h2 {
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.feed-result-line,
+.feed-tools select,
+.search-field input {
+  font-size: 13.5px;
+}
+
+/* Status is a word plus a colour dot --------------------------------------- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+.status.success { color: var(--success); }
+.status.warning { color: var(--warning); }
+.status.info { color: var(--info); }
+.status.danger { color: var(--danger); }
+.status.neutral { color: var(--faint); }
+
+/* Quiet link --------------------------------------------------------------- */
+.quiet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.quiet-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.section-meta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+/* Layout switcher ---------------------------------------------------------- */
+.layout-switcher {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.layout-switcher-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.layout-switcher-options {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.layout-switcher-options button {
+  min-height: 34px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.layout-switcher-options button:hover {
+  color: var(--ink);
+}
+
+.layout-switcher-options button.is-active {
+  background: var(--surface);
+  color: var(--accent);
+  box-shadow: var(--shadow-1);
+}
+
+.layout-switcher-options button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Topbar ------------------------------------------------------------------- */
+.app-column > .topbar {
+  gap: 18px;
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.topbar-user .avatar {
+  cursor: default;
+}
+
+/* Panels, tables, lists ---------------------------------------------------- */
+.records-panel {
+  padding: 22px 24px;
+  margin-bottom: 22px;
+}
+
+.records-panel .section-heading {
+  margin-bottom: 14px;
+}
+
+table {
+  min-width: 680px;
+}
+
+th {
+  padding: 11px 14px;
+}
+
+td {
+  padding: 14px 14px;
+}
+
+tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.row-actions button {
+  min-height: 36px;
+  font-size: 12.5px;
+}
+
+.hours-form label,
+.grant-fields > label {
+  font-size: 12.5px;
+}
+
+.skeleton-list {
+  display: grid;
+  gap: 12px;
+}
+
+.skeleton-row {
+  height: 66px;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.preview-note {
+  display: block;
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  color: var(--faint);
+}
+
+.detail-info-icon {
+  color: var(--accent);
+}
+
+.what-to-know h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.what-to-know p {
+  margin-top: 8px;
+}
+
+.signup-card h3 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.signup-card > p {
+  font-size: 13.5px;
+}
+
+/* Awkward first-render states --------------------------------------------- */
+.manager-summary small,
+.detail-organizer,
+.record-banner p,
+.no-completed {
+  font-size: 13px;
+}
+
+/* Responsive --------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  .layout-switcher-label {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .topbar-user-name {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .content-wrap {
+    width: calc(100% - 32px);
+    padding: 22px 0 48px;
+  }
+
+  .layout-switcher {
+    gap: 0;
+  }
+
+  .layout-switcher-options {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .layout-switcher-options button {
+    padding: 0 10px;
+  }
+
+  .app-column > .topbar {
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 60px;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layout-switcher-options button {
+    transition: none;
+  }
+}
