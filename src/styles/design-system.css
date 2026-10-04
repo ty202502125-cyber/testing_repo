@@ -38,6 +38,16 @@
   --r-md: 8px;
   --r-lg: 12px;
   --r-xl: 16px;
+  /* One button scale: 34px for dense rows, 40px for standard actions, 44px for
+     the single hero action of a screen. */
+  --r-btn: 10px;
+  --r-btn-sm: 8px;
+  --btn-h-sm: 34px;
+  --btn-h-md: 40px;
+  --btn-h-lg: 44px;
+  --btn-h-icon: 36px;
+  --btn-pad: 16px;
+  --btn-pad-sm: 12px;
   --shadow-1: 0 1px 2px rgba(28, 42, 36, 0.05);
   --shadow-2: 0 4px 16px rgba(28, 42, 36, 0.07);
   --measure: 1160px;
@@ -218,25 +228,208 @@ td small {
 .status.danger { color: var(--danger); }
 .status.neutral { color: var(--faint); }
 
-/* Quiet link --------------------------------------------------------------- */
-.quiet-link {
+/* Buttons -------------------------------------------------------------------
+ * One vocabulary for every button in the product: a shared height scale, one
+ * radius, one weight, no gradients and no hover lift.
+ *
+ * Solid green is reserved for the single primary action of a view. Everything
+ * else stays quiet at rest and hints at its meaning — accent for a navigation
+ * link, danger for a destructive one — only on hover. Pressing scales the
+ * button down rather than moving it, so no row ever shifts under the pointer.
+ */
+.button,
+.text-action,
+.back-link,
+.quiet-link,
+.icon-button,
+.theme-toggle,
+.role-toggle button,
+.layout-switcher-options button,
+.row-actions button {
+  font-family: var(--font-body);
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.1s ease;
+}
+
+/* Primary + secondary ------------------------------------------------------ */
+.button {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 4px 0;
-  border: 0;
-  background: none;
-  color: var(--accent);
-  font-family: var(--font-body);
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--btn-h-md);
+  padding: 0 var(--btn-pad);
+  border: 1px solid transparent;
+  border-radius: var(--r-btn);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-size: 13.5px;
-  font-weight: 650;
+  font-weight: 600;
+  line-height: 1;
   cursor: pointer;
 }
 
+.button:hover {
+  background: var(--accent-hover);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button.outline {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--ink);
+}
+
+.button.outline:hover {
+  background: var(--surface-2);
+}
+
+.button.dark {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+
+.button.dark:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Text buttons — colour and a nudging arrow, never a filled slab ------------- */
+.text-action,
+.quiet-link,
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.16s ease;
+}
+
+.text-action:hover,
 .quiet-link:hover {
   color: var(--accent-hover);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+}
+
+.back-link {
+  color: var(--muted);
+}
+
+.back-link:hover {
+  color: var(--ink);
+}
+
+.quiet-link .icon {
+  transition: transform 0.16s ease;
+}
+
+.quiet-link:hover .icon {
+  transform: translateX(2px);
+}
+
+.text-action:disabled,
+.quiet-link:disabled,
+.back-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Icon buttons ------------------------------------------------------------- */
+.icon-button,
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: var(--btn-h-icon);
+  height: var(--btn-h-icon);
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--r-btn-sm);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.theme-toggle {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.icon-button:hover,
+.theme-toggle:hover {
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--ink);
+}
+
+.icon-button:active,
+.theme-toggle:active {
+  transform: scale(0.94);
+}
+
+.icon-button:disabled,
+.theme-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile-only icon button, so it is declared after .icon-button. */
+.hamburger {
+  display: none;
+}
+
+/* Form segments (account type picker) ------------------------------------- */
+.role-toggle button {
+  min-height: var(--btn-h-md);
+  padding: 0 var(--btn-pad-sm);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-btn);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.role-toggle button:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.role-toggle button:active {
+  transform: scale(0.98);
+}
+
+.role-toggle button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.role-toggle button.active:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 .section-meta {
@@ -275,21 +468,28 @@ td small {
 }
 
 .layout-switcher-options button {
-  min-height: 34px;
+  min-height: var(--btn-h-sm);
   padding: 0 13px;
   border: 0;
   border-radius: 6px;
   background: transparent;
   color: var(--muted);
-  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  white-space: nowrap;
 }
 
 .layout-switcher-options button:hover {
   color: var(--ink);
+}
+
+.layout-switcher-options button:active {
+  transform: scale(0.98);
+}
+
+.layout-switcher-options button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .layout-switcher-options button.is-active {
@@ -300,7 +500,7 @@ td small {
 
 .layout-switcher-options button:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline-offset: 2px;
 }
 
 /* Topbar ------------------------------------------------------------------- */
@@ -347,9 +547,75 @@ tbody tr:hover {
   background: var(--surface-2);
 }
 
+/* Row actions in tables — compact and quiet, tone revealed on hover. */
 .row-actions button {
-  min-height: 36px;
+  min-height: var(--btn-h-sm);
+  padding: 0 var(--btn-pad-sm);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-btn-sm);
+  background: var(--surface);
+  color: var(--ink);
   font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.row-actions button:hover {
+  background: var(--surface-2);
+}
+
+.row-actions button:active {
+  transform: scale(0.98);
+}
+
+.row-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.row-actions .edit-btn {
+  padding: 0 10px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--accent);
+}
+
+.row-actions .edit-btn:hover {
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+}
+
+.row-actions .approve-btn {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.row-actions .approve-btn:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.row-actions .reject-btn {
+  color: var(--muted);
+}
+
+.row-actions .reject-btn:hover {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+.row-actions .danger-btn {
+  padding: 0 10px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--danger);
+}
+
+.row-actions .danger-btn:hover {
+  background: var(--danger-bg);
 }
 
 .hours-form label,
@@ -423,6 +689,12 @@ tbody tr:hover {
   }
 }
 
+@media (max-width: 900px) {
+  .hamburger {
+    display: grid;
+  }
+}
+
 @media (max-width: 640px) {
   .content-wrap {
     width: calc(100% - 32px);
@@ -453,7 +725,15 @@ tbody tr:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .layout-switcher-options button {
+  .button,
+  .text-action,
+  .back-link,
+  .quiet-link,
+  .icon-button,
+  .theme-toggle,
+  .role-toggle button,
+  .layout-switcher-options button,
+  .row-actions button {
     transition: none;
   }
 }

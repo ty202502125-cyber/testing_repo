@@ -148,7 +148,7 @@ export default function AdminActivityManager({ notify }) {
                       {item.status !== 'cancelled' && item.status !== 'completed' ? (
                         <button className="reject-btn" onClick={() => cancel(item)}>Cancel event</button>
                       ) : null}
-                      <button className="reject-btn" onClick={() => remove(item)}>Delete</button>
+                      <button className="danger-btn" onClick={() => remove(item)}>Delete</button>
                     </div>
                   </td>
                 </tr>

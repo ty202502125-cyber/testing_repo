@@ -135,22 +135,38 @@
 }
 
 .control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   border: 0;
   background: none;
   padding: 2px 0;
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
   color: var(--accent);
   cursor: pointer;
+  transition: color 0.16s ease;
 }
 
 .control:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: var(--accent-hover);
+}
+
+.control .icon {
+  transition: transform 0.16s ease;
+}
+
+.control:hover .icon {
+  transform: translateX(2px);
 }
 
 .controlDanger {
   color: var(--muted);
+}
+
+.controlDanger:hover {
+  color: var(--danger);
 }
 
 /* Compact information row -------------------------------------------------- */
@@ -442,20 +458,32 @@
   align-items: center;
   justify-content: center;
   gap: 9px;
-  min-height: 44px;
-  padding: 0 16px;
-  border: 0;
-  border-radius: var(--r-md);
+  min-height: var(--btn-h-lg);
+  padding: 0 var(--btn-pad);
+  border: 1px solid var(--pine);
+  border-radius: var(--r-btn);
   background: var(--pine);
   color: #fff;
   font-family: var(--font-body);
   font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.1s ease;
 }
 
 .taskAction:hover {
   background: var(--pine-deep);
+  border-color: var(--pine-deep);
+}
+
+.taskAction:active {
+  transform: scale(0.98);
+}
+
+.taskAction:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Approval review list ----------------------------------------------------- */
@@ -558,17 +586,18 @@
 
 .approve,
 .decline {
-  min-height: 40px;
+  min-height: var(--btn-h-sm);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 0 14px;
-  border-radius: var(--r-sm);
+  padding: 0 var(--btn-pad-sm);
+  border-radius: var(--r-btn-sm);
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.1s ease;
 }
 
 .approve {
@@ -579,12 +608,19 @@
 
 .approve:hover {
   background: var(--pine-deep);
+  border-color: var(--pine-deep);
+}
+
+.approve:active,
+.decline:active {
+  transform: scale(0.98);
 }
 
 .approve:disabled,
 .decline:disabled {
-  opacity: 0.55;
+  opacity: 0.5;
   cursor: progress;
+  transform: none;
 }
 
 .decline {
@@ -594,7 +630,8 @@
 }
 
 .decline:hover {
-  border-color: var(--danger);
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
   color: var(--danger);
 }
 
