@@ -249,7 +249,6 @@ td small {
 .icon-button,
 .theme-toggle,
 .role-toggle button,
-.layout-switcher-options button,
 .row-actions button {
   font-family: var(--font-body);
   white-space: nowrap;
@@ -448,66 +447,6 @@ td small {
   white-space: nowrap;
 }
 
-/* Layout switcher ---------------------------------------------------------- */
-.layout-switcher {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.layout-switcher-label {
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-
-.layout-switcher-options {
-  display: flex;
-  gap: 2px;
-  padding: 3px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-}
-
-.layout-switcher-options button {
-  min-height: var(--btn-h-sm);
-  padding: 0 13px;
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.layout-switcher-options button:hover {
-  color: var(--ink);
-}
-
-.layout-switcher-options button:active {
-  transform: scale(0.98);
-}
-
-.layout-switcher-options button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.layout-switcher-options button.is-active {
-  background: var(--surface);
-  color: var(--accent);
-  box-shadow: var(--shadow-1);
-}
-
-.layout-switcher-options button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
 /* Topbar ------------------------------------------------------------------- */
 .app-column > .topbar {
   gap: 18px;
@@ -682,12 +621,6 @@ tbody tr:hover {
 }
 
 /* Responsive --------------------------------------------------------------- */
-@media (max-width: 1080px) {
-  .layout-switcher-label {
-    display: none;
-  }
-}
-
 @media (max-width: 960px) {
   .topbar-user-name {
     display: none;
@@ -704,19 +637,6 @@ tbody tr:hover {
   .content-wrap {
     width: calc(100% - 32px);
     padding: 22px 0 48px;
-  }
-
-  .layout-switcher {
-    gap: 0;
-  }
-
-  .layout-switcher-options {
-    max-width: 100%;
-    overflow-x: auto;
-  }
-
-  .layout-switcher-options button {
-    padding: 0 10px;
   }
 
   .app-column > .topbar {
@@ -737,7 +657,6 @@ tbody tr:hover {
   .icon-button,
   .theme-toggle,
   .role-toggle button,
-  .layout-switcher-options button,
   .row-actions button {
     transition: none;
   }
@@ -1006,3 +925,26 @@ tbody tr:last-child td { border-bottom: 0; }
 .impact-panel { padding: 30px; }
 .badge { font-size: 11px; padding: 3px 9px; }
 .empty-state { border-style: solid; }
+
+/* Motion is reserved for orientation and direct feedback. */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.main-content > .content-wrap {
+  animation: page-enter 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.sidebar .nav-link,
+.button,
+.taskAction,
+.approve,
+.decline,
+.row-actions button {
+  transition-duration: 0.18s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-content > .content-wrap { animation: none; }
+}

@@ -1,10 +1,8 @@
 import Glyph from './Glyph';
-import LayoutSwitcher from './LayoutSwitcher';
 import { initials } from '../utils/format';
 
 /**
- * The bar carries two real things: where you are and which workspace layout is
- * active. It no longer claims a live system status it cannot verify.
+ * The bar keeps orientation and account context close at hand.
  */
 export default function AppTopbar({ admin, pageLabel, user, menuOpen, onToggleMenu }) {
   return (
@@ -23,7 +21,6 @@ export default function AppTopbar({ admin, pageLabel, user, menuOpen, onToggleMe
           <b>{pageLabel}</b>
         </div>
       </div>
-      <LayoutSwitcher />
       <span className="topbar-user">
         <span className="avatar small-avatar" aria-hidden="true">{initials(user.name)}</span>
         <span className="topbar-user-name">{user.name}</span>

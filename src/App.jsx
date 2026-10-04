@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './context/authHooks';
-import { LayoutProvider } from './context/LayoutContext';
-import { useLayout } from './context/layoutHooks';
-import { getLayout } from './layouts/registry';
+import workspace from './layouts/campusWeek';
 import AppSidebar from './components/AppSidebar';
 import AppTopbar from './components/AppTopbar';
 import { Button, EmptyState } from './components/ui';
@@ -21,7 +19,6 @@ import './styles/design-system.css';
 
 function AppShell() {
   const { user, login, register, logout } = useAuth();
-  const { layoutId } = useLayout();
   const location = useLocation();
   const navigate = useNavigate();
   const path = location.pathname;
@@ -118,7 +115,6 @@ function AppShell() {
   const pageLabel = path.startsWith('/activities/')
     ? 'Activity details'
     : navItems.find(([to]) => isActive(to))?.[1] || 'Workspace';
-  const Layout = getLayout(layoutId);
   const unavailable = (path.startsWith('/admin') && !admin) || (!path.startsWith('/admin') && admin);
 
   return (
@@ -149,15 +145,15 @@ function AppShell() {
           menuOpen={menuOpen}
           onToggleMenu={() => setMenuOpen((open) => !open)}
         />
-        <main id="main-content" className="main-content" key={`${path}-${revision}-${layoutId}`} tabIndex="-1">
-          {path === '/dashboard' && !admin && <Layout.StudentOverview user={user} go={go} notify={notify} />}
+        <main id="main-content" className="main-content" key={`${path}-${revision}`} tabIndex="-1">
+          {path === '/dashboard' && !admin && <workspace.StudentOverview user={user} go={go} notify={notify} />}
           {path === '/activities' && !admin && <ActivityFeed go={go} />}
           {path.startsWith('/activities/') && !admin && (
             <ActivityDetail id={path.split('/').pop()} go={go} notify={notify} user={user} refresh={() => setRevision((n) => n + 1)} />
           )}
           {path === '/records' && !admin && <StudentRecords user={user} notify={notify} />}
-          {path === '/admin' && admin && <Layout.AdminOverview focus="dashboard" go={go} notify={notify} />}
-          {path === '/admin/approvals' && admin && <Layout.AdminOverview focus="approvals" go={go} notify={notify} />}
+          {path === '/admin' && admin && <workspace.AdminOverview focus="dashboard" go={go} notify={notify} />}
+          {path === '/admin/approvals' && admin && <workspace.AdminOverview focus="approvals" go={go} notify={notify} />}
           {path === '/admin/activities' && admin && <AdminActivityManager notify={notify} />}
           {path === '/admin/templates' && admin && <CertificateTemplateManager notify={notify} />}
           {path === '/admin/certificates' && admin && <AdminCertificates notify={notify} />}
@@ -182,9 +178,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <LayoutProvider>
-          <AppShell />
-        </LayoutProvider>
+        <AppShell />
       </AuthProvider>
     </BrowserRouter>
   );

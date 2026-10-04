@@ -2,19 +2,15 @@ import { useEffect, useState } from 'react';
 import Glyph from '../components/Glyph';
 import ActivityList from '../components/ActivityList';
 import { EmptyState, PageIntro } from '../components/ui';
-import { useLayout } from '../context/layoutHooks';
-import { getLayout } from '../layouts/registry';
 import { activityService } from '../services/api';
 
 const CATEGORIES = ['Environment', 'Campus Care', 'Tutoring', 'Community'];
 
 /**
- * Discovery. The list presentation follows the active workspace layout, but the
- * ordering is real: activities are always sorted by date, never by storage order.
+ * Discovery stays schedule-led: activities are always sorted by date, never by storage order.
  */
 export default function ActivityFeed({ go }) {
-  const { layoutId } = useLayout();
-  const feedMode = getLayout(layoutId).feedMode;
+  const feedMode = 'agenda';
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All categories');
