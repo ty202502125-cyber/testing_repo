@@ -35,22 +35,28 @@
 }
 
 .dateCell {
-  padding-top: 2px;
+  align-self: start;
+  display: grid;
+  justify-items: center;
+  gap: 1px;
+  padding: 8px 4px 9px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
 }
 
 .weekday {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
   color: var(--accent);
 }
 
 .dateNum {
   font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 19px;
+  font-weight: 600;
   line-height: 1.15;
-  margin-top: 4px;
   white-space: nowrap;
   color: var(--ink);
 }
@@ -463,7 +469,7 @@
   border: 1px solid var(--pine);
   border-radius: var(--r-btn);
   background: var(--pine);
-  color: #fff;
+  color: var(--accent-ink);
   font-family: var(--font-body);
   font-size: 13.5px;
   font-weight: 600;
@@ -603,7 +609,7 @@
 .approve {
   background: var(--pine);
   border: 1px solid var(--pine);
-  color: #fff;
+  color: var(--accent-ink);
 }
 
 .approve:hover {

@@ -63,7 +63,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--accent, #14695a);
+  outline: 2px solid var(--accent, #b0491f);
   outline-offset: 2px;
 }
 
@@ -79,6 +79,6 @@ img {
 }
 
 ::selection {
-  background: rgba(20, 105, 90, 0.18);
+  background: rgba(176, 73, 31, 0.18);
   color: inherit;
 }

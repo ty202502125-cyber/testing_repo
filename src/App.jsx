@@ -44,6 +44,15 @@ function AppShell() {
     return () => window.removeEventListener('campus:records-changed', onChange);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen]);
+
   const notify = (message) => {
     setToast(message);
     window.setTimeout(() => setToast(''), 4000);
@@ -114,6 +123,7 @@ function AppShell() {
 
   return (
     <div className="app app-layout">
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <AppSidebar
         user={user}
         admin={admin}
@@ -139,7 +149,7 @@ function AppShell() {
           menuOpen={menuOpen}
           onToggleMenu={() => setMenuOpen((open) => !open)}
         />
-        <main className="main-content" key={`${path}-${revision}-${layoutId}`}>
+        <main id="main-content" className="main-content" key={`${path}-${revision}-${layoutId}`} tabIndex="-1">
           {path === '/dashboard' && !admin && <Layout.StudentOverview user={user} go={go} notify={notify} />}
           {path === '/activities' && !admin && <ActivityFeed go={go} />}
           {path.startsWith('/activities/') && !admin && (
