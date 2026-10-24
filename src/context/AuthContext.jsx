@@ -1,30 +1,30 @@
-import { useMemo, useState } from 'react';
-import { authService, store } from '../services/api';
-import { AuthContext } from './authHooks';
+import { useMemo, useState } from 'react'
+import { authService, store } from '../services/api'
+import { AuthContext } from './authHooks'
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => store.read('campus_session', null));
+  const [user, setUser] = useState(() => store.read('campus_session', null))
 
-  const value = useMemo(
+  const authValue = useMemo(
     () => ({
       user,
       login: async (email, password) => {
-        const result = await authService.login(email, password);
-        setUser(result);
-        return result;
+        const loggedInUser = await authService.login(email, password)
+        setUser(loggedInUser)
+        return loggedInUser
       },
-      register: async (data) => {
-        const result = await authService.register(data);
-        setUser(result);
-        return result;
+      register: async (userData) => {
+        const newUser = await authService.register(userData)
+        setUser(newUser)
+        return newUser
       },
       logout: () => {
-        authService.logout();
-        setUser(null);
+        authService.logout()
+        setUser(null)
       },
     }),
     [user],
-  );
+  )
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
 }

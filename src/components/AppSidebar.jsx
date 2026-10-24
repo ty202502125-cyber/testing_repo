@@ -1,6 +1,6 @@
-import Glyph from './Glyph';
-import { ThemeToggle } from './ui';
-import { initials } from '../utils/format';
+import Glyph from './Glyph'
+import { ThemeToggle } from './ui'
+import { initials } from '../utils/format'
 
 /**
  * Persistent navigation. Each role gets its own destination list, and the
@@ -22,17 +22,30 @@ export default function AppSidebar({
 }) {
   return (
     <>
-      {menuOpen ? <button className="sidebar-backdrop" aria-label="Close navigation" onClick={onClose} /> : null}
-      <aside className={`sidebar ${menuOpen ? 'is-open' : ''}`.trim()} aria-label="Main navigation">
-        <button className="brand" onClick={() => go(dashboardPath)}>
-          <span className="brand-mark">C</span>
+      {menuOpen
+        ? (
+          <button
+            className='sidebar-backdrop'
+            aria-label='Close navigation'
+            onClick={onClose}
+          />
+        )
+        : null}
+      <aside
+        className={`sidebar ${menuOpen ? 'is-open' : ''}`.trim()}
+        aria-label='Main navigation'
+      >
+        <button className='brand' onClick={() => go(dashboardPath)}>
+          <span className='brand-mark'>C</span>
           <span>
-            Campus<span className="brand-light"> Connect</span>
+            Campus<span className='brand-light'>Connect</span>
             <small>STUDENT COMMUNITY</small>
           </span>
         </button>
-        <span className="sidebar-section-label">{admin ? 'Administration' : 'Student space'}</span>
-        <nav className="topnav side-nav">
+        <span className='sidebar-section-label'>
+          {admin ? 'Administration' : 'Student space'}
+        </span>
+        <nav className='topnav side-nav'>
           {navItems.map(([to, label, icon]) => (
             <button
               key={to}
@@ -41,28 +54,42 @@ export default function AppSidebar({
               aria-current={isActive(to) ? 'page' : undefined}
             >
               <Glyph name={icon} size={17} />
-              <span className="nav-text">{label}</span>
-              {to === '/admin/approvals' && pendingCount > 0 ? (
-                <span className="nav-count" aria-label={`${pendingCount} submissions waiting`}>{pendingCount}</span>
-              ) : null}
+              <span className='nav-text'>{label}</span>
+              {to === '/admin/approvals' && pendingCount > 0
+                ? (
+                  <span
+                    className='nav-count'
+                    aria-label={`${pendingCount} submissions waiting`}
+                  >
+                    {pendingCount}
+                  </span>
+                )
+                : null}
             </button>
           ))}
         </nav>
-        <div className="sidebar-spacer" />
-        <div className="sidebar-account">
-          <span className="avatar" aria-hidden="true">{initials(user.name)}</span>
-          <div className="profile-meta">
+        <div className='sidebar-spacer' />
+        <div className='sidebar-account'>
+          <span className='avatar' aria-hidden='true'>
+            {initials(user.name)}
+          </span>
+          <div className='profile-meta'>
             <b>{user.name}</b>
             <span>{admin ? 'Community admin' : 'Student volunteer'}</span>
           </div>
         </div>
-        <div className="sidebar-actions">
+        <div className='sidebar-actions'>
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-          <button title="Sign out" aria-label="Sign out" className="icon-button logout" onClick={onLogout}>
-            <Glyph name="logout" size={17} />
+          <button
+            title='Sign out'
+            aria-label='Sign out'
+            className='icon-button logout'
+            onClick={onLogout}
+          >
+            <Glyph name='logout' size={17} />
           </button>
         </div>
       </aside>
     </>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { dateLabel } from './format';
+import { dateLabel } from './format'
 
 /**
  * Fills a certificate template's placeholders with the granted record's values.
@@ -13,6 +13,9 @@ export function certificateMessage(certificate) {
     hours: String(certificate.hours),
     certificateNumber: certificate.certificateNumber,
     dateIssued: dateLabel(certificate.issuedAt.slice(0, 10)),
-  };
-  return Object.entries(values).reduce((message, [key, value]) => message.replaceAll(`{${key}}`, value), certificate.template.message);
+  }
+  return Object.entries(values).reduce(
+    (message, [key, value]) => message.replaceAll(`{${key}}`, value),
+    certificate.template.message,
+  )
 }

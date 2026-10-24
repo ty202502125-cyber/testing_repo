@@ -1,5 +1,10 @@
-import { availabilityNote, availability, eventSchedule, activityActionLabel } from '../utils/format';
-import { AgendaRow, InfoRow, AgendaList, InfoList } from './workspace';
+import {
+  activityActionLabel,
+  availability,
+  availabilityNote,
+  eventSchedule,
+} from '../utils/format'
+import { AgendaList, AgendaRow, InfoList, InfoRow } from './workspace'
 
 /**
  * Shared activity list. The layout choice only changes the presentation —
@@ -7,8 +12,8 @@ import { AgendaRow, InfoRow, AgendaList, InfoList } from './workspace';
  * variant reads the same data and shows the same honest availability.
  */
 export default function ActivityList({ items, mode = 'rows', go, empty }) {
-  if (!items.length) return empty;
-  const open = (item) => go(`/activities/${item.id}`);
+  if (!items.length) return empty
+  const open = (item) => go(`/activities/${item.id}`)
   if (mode === 'agenda') {
     return (
       <AgendaList>
@@ -23,7 +28,7 @@ export default function ActivityList({ items, mode = 'rows', go, empty }) {
           />
         ))}
       </AgendaList>
-    );
+    )
   }
   return (
     <InfoList>
@@ -39,5 +44,5 @@ export default function ActivityList({ items, mode = 'rows', go, empty }) {
         />
       ))}
     </InfoList>
-  );
+  )
 }
